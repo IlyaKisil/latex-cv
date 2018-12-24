@@ -1,0 +1,286 @@
+
+% !TEX root = main.tex
+
+\usepackage[utf8]{inputenc}
+
+%----------------------------------------------------------------------------------------
+%	LOGIC
+%----------------------------------------------------------------------------------------
+
+% provides \isempty test
+\usepackage{xifthen}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% some tex-live fonts
+% \usepackage[defaultsans]{droidsans}
+% \usepackage[default]{comfortaa}
+% \usepackage{cmbright}
+% \usepackage[default]{raleway}
+% \usepackage{fetamont}
+% \usepackage[default]{gillius}
+%\usepackage[light,math]{iwona}
+% \usepackage[thin]{roboto}
+
+% set font default
+\renewcommand*\familydefault{\sfdefault}
+\usepackage[T1]{fontenc}
+
+% more font size definitions
+\usepackage{moresize}
+
+\usepackage{fontawesome}
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT  DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+% debug page outer frames
+%\usepackage{showframe}
+
+
+% define page styles using geometry
+\usepackage[a4paper]{geometry}
+\geometry{top=1cm, bottom=-.6cm, left=0.4cm, right=1cm}
+
+
+%less space between header and content
+\setlength{\headheight}{-5pt}
+
+
+%indentation is zero
+\setlength{\parindent}{0mm}
+
+%----------------------------------------------------------------------------------------
+%	TABLE /ARRAY DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+%for layouting tables
+\usepackage{multicol}
+\usepackage{multirow}
+
+%extended aligning of tabular cells
+\usepackage{array}
+
+\newcolumntype{x}[1]{
+    >{\raggedleft\hspace{0pt}}p{#1}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	GRAPHICS DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage{graphicx}
+\graphicspath{
+    {imgs/}
+}
+
+\usepackage{tcolorbox}
+%for floating figures
+\usepackage{wrapfig}
+\usepackage{float}
+%\floatstyle{boxed}
+%\restylefloat{figure}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, backgrounds, mindmap, trees}
+
+%----------------------------------------------------------------------------------------
+%	Color DEFINITIONS
+%----------------------------------------------------------------------------------------
+\usepackage{transparent}
+\usepackage{color}
+
+%accent color
+\definecolor{complcol}{RGB}{250,150,10}
+
+%dark background color
+\definecolor{bgcol}{RGB}{110,110,110}
+
+%light background / accent color
+\definecolor{softcol}{RGB}{225,225,225}
+
+\definecolor{sectcol}{RGB}{0,120,150}
+
+
+%Package for links, must be the last package used
+\usepackage[hidelinks]{hyperref}
+
+
+
+%============================================================================%
+%
+%
+%	DEFINITIONS
+%
+%
+%============================================================================%
+
+% returns minipage width minus two times \fboxsep
+% to keep padding included in width calculations
+\newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM STRUT FOR EMPTY BOXES
+%----------------------------------------- -----------------------------------------------
+\newcommand{\mystrut}{
+    \rule[-.3\baselineskip]{0pt}{\baselineskip}
+}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM LOREM IPSUM
+%----------------------------------------------------------------------------------------
+\newcommand{\lorem}{
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
+}
+%----------------------------------------------------------------------------------------
+% 	ARROW GRAPHICS in Tikz
+%----------------------------------------------------------------------------------------
+% a six pointed arrow pointing to the left/right
+\newcommand{\tzlarrow}{
+    (0,0) -- (0.2,0) -- (0.3,0.2) -- (0.2,0.4) -- (0,0.4) -- (0.1,0.2) -- cycle;
+}
+\newcommand{\tzrarrow}{
+    (0,0.2) -- (0.1,0) -- (0.3,0) -- (0.2,0.2) -- (0.3,0.4) -- (0.1,0.4) -- cycle;
+}
+
+% include the left/right arrow into a tikz picture
+% param1: fill color
+\newcommand{\larrow}[1]{
+    \begin{tikzpicture}[scale=0.58]
+        \filldraw[fill=#1!100,draw=#1!100!black]  \tzlarrow
+    \end{tikzpicture}
+}
+\newcommand{\rarrow}{
+    \begin{tikzpicture}[scale=0.7]
+    	\filldraw[fill=sectcol!100,draw=sectcol!100!black] \tzrarrow
+    \end{tikzpicture}
+}
+
+%----------------------------------------------------------------------------------------
+%	Custom sections
+%----------------------------------------------------------------------------------------
+
+% create a coloured box with arrow and title as cv section headline
+% param 1: section title
+\newcommand{\cvsection}[1]{
+    \colorbox{sectcol}{\mystrut \makebox[1\mpwidth][l]{
+    \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \textbf{\textcolor{white}{\uppercase{#1}}}\hspace{4pt}
+    }}\\
+}
+
+% create a coloured arrow with title as cv meta section section
+% param 1: meta section title
+\newenvironment{metasection}[1]{
+	\vspace{6pt}
+	\begin{center}
+		\textcolor{white}{\large{\uppercase{#1}}}\\
+	\normalsize
+	\parbox{0.7\mpwidth}{\textcolor{white}	\hrule}
+}{\end{center}}
+
+
+% Content will be aligned on the left
+\newenvironment{metaSectionLeft}[1]{
+	\vspace{6pt}
+    \begin{center}
+        \textcolor{white}{\large{\uppercase{#1}}}\\
+        \begin{minipage}[t]{0.85\linewidth}
+            \normalsize
+            \parbox{\mpwidth}{\textcolor{white}	\hrule}
+
+}{
+        \end{minipage}
+    \end{center}
+}
+
+% Content will be centred
+\newenvironment{metaSectionCenter}[1]{
+	\vspace{6pt}
+    \begin{center}
+        \textcolor{white}{\large{\uppercase{#1}}}\\
+        \begin{minipage}[t]{0.85\linewidth}
+            \normalsize
+            \parbox{\mpwidth}{\textcolor{white}	\hrule}
+            \begin{center}
+}{
+            \end{center}
+        \end{minipage}
+    \end{center}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	 CV EVENT
+%----------------------------------------------------------------------------------------
+
+% creates a stretched box as cv entry headline followed by two paragraphs about
+% the work you did
+% param 1:	event time i.e. 2014 or 2011-2014 etc.
+% param 2:	event name (what did you do?)
+% param 3:	institution (where did you work / study)
+% param 4:	what was your position
+% param 5:	some words about your contributions
+\newcommand{\cvevent}[5]{
+    % \vspace{8pt}
+	\begin{tabular*}{1\mpwidth}{p{0.55\mpwidth}  x{0.42\mpwidth}}
+        \textcolor{black}{\textbf{#2}} & \textcolor{complcol}{#3}, \textcolor{bgcol}{#1}
+	\end{tabular*}
+    % \vspace{-12pt}
+    \textcolor{softcol}{\hrule}
+    \vspace{6pt}
+	\begin{tabular*}{0.5\mpwidth}{p{\mpwidth}}
+        \larrow{softcol}  #4\\[3pt]
+        \larrow{softcol}  #5\\[6pt]
+	\end{tabular*}
+}
+
+% creates a stretched box as
+\newcommand{\cveventmeta}[2]{
+	\mbox{\mystrut \hspace{87pt}\textit{#1}}\\
+	#2
+}
+
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand{\vcenteredinclude}[1]{
+    \begingroup
+    \setbox0=\hbox{\includegraphics{#1}}%
+    \parbox{\wd0}{\box0}
+    \endgroup
+}
+
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand*{\vcenteredhbox}[1]{
+    \begingroup
+    \setbox0=\hbox{#1}\parbox{\wd0}{\box0}
+    \endgroup
+}
+
+%----------------------------------------------------------------------------------------
+%	ICON-SET EMBEDDING
+%----------------------------------------------------------------------------------------
+%icon shortcut
+\newcommand{\icon}[3]{\makebox(#2, #2){\textcolor{#3}{\csname fa#1\endcsname}}}
+
+%icon with text shortcut
+\newcommand{\icontext}[4]{
+	\vcenteredhbox{\icon{#1}{#2}{#4}}
+    \vcenteredhbox{\textcolor{#4}{#3}}
+}
+
+%icon with website url
+\newcommand{\iconhref}[5]{
+    \vcenteredhbox{\icon{#1}{#2}{#5}}
+    \href{#4}{\textcolor{#5}{#3}}
+}
+
+%icon with email link
+\newcommand{\iconemail}[5]{
+    \vcenteredhbox{\icon{#1}{#2}{#5}}
+    \href{mailto:#4}{\textcolor{#5}{#3}}
+}

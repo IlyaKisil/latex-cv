@@ -1,2 +1,3 @@
 # latex-cv
-CV templates written in LaTex
+
+CV template written in LaTex
