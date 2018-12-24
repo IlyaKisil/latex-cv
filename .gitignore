@@ -5,6 +5,8 @@
 #############################
 
 main.pdf
+main-cv.pdf
+main-cl.pdf
 
 # files for automatic directory detection for adding to MATLAB search path
 .ADD_TO_MATLAB_PATH*
