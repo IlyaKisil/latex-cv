@@ -2,10 +2,14 @@
 \documentclass[11pt, a4paper]{ilyakisil-cv}
 
 % Configure page margins with geometry
-\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+\geometry{
+    left=1.4cm,
+    top=.8cm,
+    right=1.4cm,
+    bottom=1.8cm,
+    footskip=.5cm
+}
 
-% Specify the location of the included fonts
-% \fontdir[fonts/]
 
 % Color for highlights
 % Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
@@ -22,6 +26,7 @@
 % \definecolor{lighttext}{HTML}{999999}
 
 % Set false if you don't want to highlight section with awesome color
+% TODO: extend this to having control over how many characters should be highlighted
 \setbool{acvSectionColorHighlight}{true}
 
 % If you would like to change the social information separator from a pipe (|) to something else
@@ -32,37 +37,45 @@
 %	PERSONAL INFORMATION
 %	Comment any of the lines below if they are not required
 %-------------------------------------------------------------------------------
-% Available options: circle|rectangle,edge/noedge,left/right
-% \photo{./ILYA_KISIL_1}
-% \name{Ilya Kisil}{Kisil}
-\firstname{<firstname>}
-\lastname{<lastname>}
-\position{PhD Student{\enskip\cdotp\enskip}Imperial College London}
-\address{London, UK}
+% \photo{./ILYA_KISIL_1} % Available non-default options: [rectangle, noedge, right]
+\firstname{Ilya}
+\lastname{Kisil}
 
-\mobile{+44 (7539) 85****}
-\email{ilyakisil@gmail.com}
-\homepage{www.posquit0.com}
-\github{IlyaKisil}
-% \linkedin{posquit0}
+\position{PhD Student{\enskip\cdotp\enskip}Imperial College London} % don't really need this
+\address{London, UK} % don't really need this
+
+\mobile{+44 (7539) 85****}      % personal info
+\email{ilyakisil@gmail.com}     % personal info
+\homepage{ilyakisil.github.io}  % personal info
+
+\github{IlyaKisil}              % media/social accounts
+\linkedin{IlyaKisil}            % media/social accounts
+\googlescholar{ZZT8YUcAAAAJ}{}  % media/social accounts
+\medium{ik1614}                 % media/social accounts
 
 
 
 %-------------------------------------------------------------------------------
 \begin{document}
 
-% Print the header with above personal informations
+% Print the header with above personal information
 % Give optional argument to change alignment(C: center, L: left, R: right)
-\makecvheader
+\makecvheader[C]
 
 % Print the footer with 3 arguments(<left>, <center>, <right>)
-% Leave any of these blank if they are not needed
-\makecvfooter
-  {\today}
-  {Ilya Kisil~~~·~~~Curriculum Vitae}
-  {\thepage}
-
+\makecvfooter{\today}
+             {}
+             {\thepage}
 
 
 %-------------------------------------------------------------------------------
+%	MAIN SECTIONS
+%-------------------------------------------------------------------------------
+\input{./source/education.tex}
+\input{./source/experience.tex}
+\input{./source/projects.tex}
+\input{./source/publications.tex}
+\input{./source/accomplishments.tex}
+
+
 \end{document}

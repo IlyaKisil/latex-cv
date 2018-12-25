@@ -74,6 +74,15 @@
 % Needed to manage math fonts
 \RequirePackage{unicode-math}
 
+% Needed for creating pictures with tikz
+\RequirePackage{tikz}
+\usetikzlibrary{
+    shapes,
+    backgrounds,
+    mindmap,
+    trees
+}
+
 %-------------------------------------------------------------------------------
 % Needed to use icons from font-awesome (https://github.com/posquit0/latex-fontawesome)
 \RequirePackage{fontawesomeik}
@@ -98,6 +107,7 @@
 %                Configuration for directory locations
 %-------------------------------------------------------------------------------
 % Configure a directory location for fonts(default: './fonts/')
+% Usage: \fontdir[fonts_new_dir/]
 \newcommand*{\fontdir}[1][fonts/]{\def\@fontdir{#1}}
 \fontdir
 
@@ -112,7 +122,13 @@
 %-------------------------------------------------------------------------------
 %% Page Layout
 % Configure page margins with geometry
-\geometry{left=2.0cm, top=1.5cm, right=2.0cm, bottom=2.0cm, footskip=.5cm}
+\geometry{
+    left=2.0cm,
+    top=1.5cm,
+    right=2.0cm,
+    bottom=2.0cm,
+    footskip=.5cm
+}
 
 %% Header & Footer
 % Set offset to each header and footer
@@ -158,6 +174,19 @@
 \definecolor{awesome-concrete}{HTML}{95A5A6}
 \definecolor{awesome-darknight}{HTML}{131A28}
 \colorlet{awesome}{awesome-red}
+
+% ================================================================
+%accent color
+\definecolor{complcol}{RGB}{250,150,10}
+
+%dark background color
+\definecolor{bgcol}{RGB}{110,110,110}
+
+%light background / accent color
+\definecolor{softcol}{RGB}{225,225,225}
+
+\definecolor{sectcol}{RGB}{0,120,150}
+% ================================================================
 
 % Boolean value to switch section color highlighting
 \newbool{acvSectionColorHighlight}
@@ -315,6 +344,7 @@
 % Usage: \linkedin{<linked-in-nick>}
 \newcommand*{\linkedin}[1]{\def\@linkedin{#1}}
 
+% Defines writer's twitter (optional)
 % Usage: \twitter{<twitter handle>}
 \newcommand*{\twitter}[1]{\def\@twitter{#1}}
 
@@ -330,7 +360,25 @@
 % Usage: \xing{<xing name>}
 \newcommand*{\xing}[1]{\def\@xing{#1}}
 
-% Defines writer's twitter (optional)
+% Defines writer's medium profile (optional)
+% Usage: \medium{<medium account>}
+\newcommand*{\medium}[1]{\def\@medium{#1}}
+
+% Defines writer's google scholar profile (optional)
+% Usage: \googlescholar{<googlescholar userid>}{<googlescholar username>}
+% e.g.https://scholar.google.co.uk/citations?user=wpZDx1cAAAAJ
+% would be \googlescholar{wpZDx1cAAAAJ}{Name-to-display-next-icon}
+% If 'googlescholar-name' is not provided than it defaults to
+% '\firstname \lastname'
+\newcommand*{\googlescholar}[2]{%
+  \def\@googlescholarid{#1}%
+  \ifthenelse{\equal{#2}{}}{%
+    \def\@googlescholarname{\@firstname~\@lastname}%
+  }{%
+    \def\@googlescholarname{#2}%
+  }%
+}
+
 % Defines writer's extra informations (optional)
 % Usage: \extrainfo{<extra informations>}
 \newcommand*{\extrainfo}[1]{\def\@extrainfo{#1}}
@@ -406,6 +454,19 @@
 % Use to execute conditional statements by checking empty string
 \newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
 
+% ================================================================
+% returns minipage width minus two times \fboxsep
+% to keep padding included in width calculations
+\newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
+
+% CUSTOM STRUT FOR EMPTY BOXES
+\newcommand{\mystrut}{
+    \rule[-.3\baselineskip]{0pt}{\baselineskip}
+}
+\newcommand{\lorem}{
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
+}
+% ================================================================
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of CV structure
@@ -490,6 +551,18 @@
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
           \href{https://www.linkedin.com/in/\@linkedin}{\faLinkedinSquare\acvHeaderIconSep\@linkedin}%
         }%
+      \ifthenelse{\isundefined{\@medium}}%
+        {}%
+        {%
+          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+          \href{https://medium.com\\@\@medium}{\faMedium\acvHeaderIconSep\@medium}%
+        }%
+      \ifthenelse{\isundefined{\@googlescholarid}}%
+        {}%
+        {%
+          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+          \href{https://scholar.google.com/citations?user=\@googlescholarid}{\faGraduationCap\acvHeaderIconSep\@googlescholarname}%
+        }%
       \ifthenelse{\isundefined{\@twitter}}%
         {}%
         {%
@@ -535,7 +608,7 @@
 \newcommand*{\makecvfooter}[3]{%
   \fancyfoot{}
   \fancyfoot[L]{\footerstyle{#1}}
-  \fancyfoot[C]{\footerstyle{\@firstname\@lastname}}
+  \fancyfoot[C]{\footerstyle{\@firstname~·~\@lastname}}
   \fancyfoot[R]{\footerstyle{#3}}
 }
 
