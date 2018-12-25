@@ -466,6 +466,50 @@
 \newcommand{\lorem}{
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
 }
+
+% Content will be aligned on the left
+\newenvironment{metaSectionLeft}[1]{
+	\vspace{6pt}
+    \begin{center}
+        \textcolor{white}{\large{\uppercase{#1}}}\\
+        \begin{minipage}[t]{0.85\linewidth}
+            \normalsize
+            \parbox{\mpwidth}{\textcolor{white}	\hrule}
+
+}{
+        \end{minipage}
+    \end{center}
+}
+
+% use to vertically center content
+% credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
+\newcommand*{\vcenteredhbox}[1]{
+    \begingroup
+    \setbox0=\hbox{#1}\parbox{\wd0}{\box0}
+    \endgroup
+}
+%icon shortcut
+\newcommand{\icon}[3]{\makebox(#2, #2){\textcolor{#3}{\csname fa#1\endcsname}}}
+
+%icon with text shortcut
+\newcommand{\icontext}[4]{
+	\vcenteredhbox{\icon{#1}{#2}{#4}}
+    \vcenteredhbox{\textcolor{#4}{#3}}
+}
+
+%icon with website url
+\newcommand{\iconhref}[5]{
+    \vcenteredhbox{\icon{#1}{#2}{#5}}
+    \href{#4}{\textcolor{#5}{#3}}
+}
+
+%icon with email link
+\newcommand{\iconemail}[5]{
+    \vcenteredhbox{\icon{#1}{#2}{#5}}
+    \href{mailto:#4}{\textcolor{#5}{#3}}
+}
+
+
 % ================================================================
 
 %-------------------------------------------------------------------------------
@@ -505,7 +549,7 @@
     \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
     \\[\acvHeaderAfterNameSkip]%
     \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
-    \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
+    \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\faMapMarker~\@address\\[\acvHeaderAfterAddressSkip]}}%
     \headersocialstyle{%
       \newbool{isstart}%
       \setbool{isstart}{true}%
