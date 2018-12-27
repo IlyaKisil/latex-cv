@@ -5,8 +5,8 @@
 \geometry{
     left=0.5cm,
     top=.8cm,
-    right=0cm,
-    bottom=1.8cm,
+    right=0.2cm,
+    bottom=1cm,
     footskip=.5cm
 }
 
@@ -29,8 +29,11 @@
 % TODO: extend this to having control over how many characters should be highlighted
 \setbool{acvSectionColorHighlight}{true}
 
-% If you would like to change the social information separator from a pipe (|) to something else
+% Use to redefine the social information separator from a pipe (|) to something else
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+% Use to redefine the vertical skip before '\cvsection'
+% \renewcommand{\acvSectionTopSkip}{1mm}
 
 
 %-------------------------------------------------------------------------------
@@ -41,7 +44,7 @@
 \firstname{Ilya}
 \lastname{Kisil}
 
-\position{PhD Student{\enskip\cdotp\enskip}Imperial College London} % don't really need this
+% \position{PhD Student{\enskip\cdotp\enskip}Imperial College London} % don't really need this
 \address{London, UK} % don't really need this
 
 \mobile{+44 (7539) 85****}      % personal info
@@ -51,7 +54,7 @@
 \github{IlyaKisil}              % media/social accounts
 \linkedin{IlyaKisil}            % media/social accounts
 \googlescholar{ZZT8YUcAAAAJ}{}  % media/social accounts
-\medium{ik1614}                 % media/social accounts
+% \medium{ik1614}                 % media/social accounts
 
 
 
@@ -72,16 +75,17 @@
 %	MAIN SECTIONS
 %-------------------------------------------------------------------------------
 \fcolorbox{white}{white}{
-    \begin{minipage}[t]{0.75\linewidth}
+    \begin{minipage}[t]{0.66\linewidth}
         \input{./source/education.tex}
         \input{./source/experience.tex}
         \input{./source/projects.tex}
-        % \input{./source/publications.tex}
+        \input{./source/publications.tex}
         \input{./source/accomplishments.tex}
     \end{minipage}
 }
+\hfill
 \fcolorbox{white}{sectcol}{
-	\begin{minipage}[t]{0.24\linewidth}
+	\begin{minipage}[t]{0.33\linewidth}
         \input{./source/skills.tex}
 	\end{minipage}
 }

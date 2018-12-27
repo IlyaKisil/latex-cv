@@ -458,6 +458,10 @@
 \newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
 
 % ================================================================
+% Prints tilde sign which works correctly within URL when copy
+% and pasted from pdf into a browser
+\newcommand{\urltilde}{\char`\~}
+
 % returns minipage width minus two times \fboxsep
 % to keep padding included in width calculations
 \newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
@@ -655,7 +659,7 @@
 \newcommand*{\makecvfooter}[3]{%
   \fancyfoot{}
   \fancyfoot[L]{\footerstyle{#1}}
-  \fancyfoot[C]{\footerstyle{\@firstname~·~\@lastname}}
+  \fancyfoot[C]{\footerstyle{#2}}
   \fancyfoot[R]{\footerstyle{#3}}
 }
 
@@ -697,7 +701,7 @@
 % Define an entry of cv information
 % Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
 \newcommand*{\cventry}[5]{%
-  \vspace{-2.0mm}
+  \vspace{-1.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
@@ -709,7 +713,7 @@
   \end{tabular*}%
 }
 % Define a project entry of cv information
-% Usage: \cventry{<title>}{<homepage>}{<description>}
+% Usage: \cvproject{<title>}{<homepage>}{<description>}
 \newcommand*{\cvproject}[3]{%
     \vspace{-3.0mm}
     \begin{minipage}[t]{0.5\linewidth}
@@ -724,6 +728,14 @@
     \begin{minipage}[t]{\linewidth}
         \descriptionstyle{#3}
     \end{minipage}
+}
+\newcommand*{\cvpublication}[3]{%
+    \setlength\tabcolsep{0pt}
+    \setlength{\extrarowheight}{0pt}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 1cm} R{1cm}}
+        \entrytitlestyle{#1} & \entrydatestyle{#2} \\
+        \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#3}}
+    \end{tabular*}%
 }
 
 % Define an environment for cvsubentry
