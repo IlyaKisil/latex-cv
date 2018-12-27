@@ -202,7 +202,9 @@
 %                Configuration for fonts
 %-------------------------------------------------------------------------------
 % Set the FontAwesome font to be up-to-date.
-\newfontfamily\FA[Path=\@fontdir]{FontAwesome}
+\newfontfamily\FA[
+    Path=\@fontdir
+]{FontAwesome}
 % Set font for header (default is Roboto)
 \newfontfamily\headerfont[
   Path=\@fontdir,
@@ -245,6 +247,7 @@
 \newcommand*{\entrypositionstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\scshape\color{graytext} #1}}
 \newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
+\newcommand*{\entryhomepagestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome}\faHome~#1}}
 \newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
 
 % For elements of subentry
@@ -569,7 +572,7 @@
         {}%
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{http://\@homepage}{\faHome\acvHeaderIconSep\@homepage}%
+          \href{http://\@homepage}{\faInternetExplorer\acvHeaderIconSep\@homepage}%
         }%
       \ifthenelse{\isundefined{\@github}}%
         {}%
@@ -704,6 +707,23 @@
       \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
     \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
   \end{tabular*}%
+}
+% Define a project entry of cv information
+% Usage: \cventry{<title>}{<homepage>}{<description>}
+\newcommand*{\cvproject}[3]{%
+    \vspace{-3.0mm}
+    \begin{minipage}[t]{0.5\linewidth}
+        \raggedright
+        \entrytitlestyle{#1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.45\linewidth}
+        \raggedleft
+        \entryhomepagestyle{#2}
+    \end{minipage}
+    \begin{minipage}[t]{\linewidth}
+        \descriptionstyle{#3}
+    \end{minipage}
 }
 
 % Define an environment for cvsubentry
