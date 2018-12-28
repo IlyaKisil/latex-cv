@@ -74,8 +74,9 @@
 %-------------------------------------------------------------------------------
 %	MAIN SECTIONS
 %-------------------------------------------------------------------------------
+\newcommand*{\temp}{0.9\textheight}
 \fcolorbox{white}{white}{
-    \begin{minipage}[t]{0.66\linewidth}
+    \begin{minipage}[t][\temp]{0.66\linewidth}
         \input{./source/education.tex}
         \input{./source/experience.tex}
         \input{./source/projects.tex}
@@ -85,7 +86,7 @@
 }
 \hfill
 \fcolorbox{white}{sectcol}{
-	\begin{minipage}[t]{0.33\linewidth}
+	\begin{minipage}[t][\temp]{0.33\linewidth}
         \input{./source/skills.tex}
 	\end{minipage}
 }
