@@ -575,20 +575,20 @@
             \ifthenelse{\isundefined{\@address}}%
 			{}%
 			{%
-				\faMapMarker\acvHeaderIconSep\@address%
+				\faAlternateMapMarker\acvHeaderIconSep\@address%
 				\setbool{isstart}{false}%
 			}%
             \ifthenelse{\isundefined{\@mobile}}%
 			{}%
 			{%
                 \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\faMobile\acvHeaderIconSep\@mobile%
+				\faAlternateMobile\acvHeaderIconSep\@mobile%
 			}%
             \ifthenelse{\isundefined{\@email}}%
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
+				\href{mailto:\@email}{\faEnvelopeR\acvHeaderIconSep\@email}%
 			}%
 			\ifthenelse{\isundefined{\@homepage}}%
 			{}%
@@ -622,7 +622,7 @@
 			{}%
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-				\href{https://www.linkedin.com/in/\@linkedin}{\faLinkedinSquare\acvHeaderIconSep\@linkedin}%
+				\href{https://www.linkedin.com/in/\@linkedin}{\faLinkedIn\acvHeaderIconSep\@linkedin}%
 			}%
 			\ifthenelse{\isundefined{\@medium}}%
 			{}%
@@ -803,7 +803,7 @@
 % Define an environment for cvskill
 \newenvironment{cvskills}{%
   \vspace{\acvSectionContentTopSkip}
-  \vspace{-2.0mm}
+  % \vspace{-2.0mm}
   \begin{center}
     \setlength\tabcolsep{1ex}
     \setlength{\extrarowheight}{0pt}
@@ -812,6 +812,26 @@
     \end{tabular*}
   \end{center}
 }
+
+% Define an environment for cvskillarea
+\newcounter{startCounter}
+\newenvironment{cvskillsarea}[1]{
+    \vspace{\acvSectionContentTopSkip}
+    \begin{center}
+        \setcounter{startCounter}{1}
+        \whiledo {\value{startCounter} < 10}%
+        {%
+            \ifnum\value{startCounter}<#1
+                \icon{Star}{12}{complcol}
+            \else
+                \icon{Star}{12}{white}
+            \fi
+            \stepcounter{startCounter}%
+        }\\
+}{
+    \end{center}
+}
+
 % Define a line of cv information(skill)
 % Usage: \cvskill{<type>}{<skillset>}
 \newcommand*{\cvskill}[2]{%
