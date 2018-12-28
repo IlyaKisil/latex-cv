@@ -85,7 +85,9 @@
 
 %-------------------------------------------------------------------------------
 % Needed to use icons from font-awesome (https://github.com/posquit0/latex-fontawesome)
-\RequirePackage{fontawesomeik}
+\RequirePackage{fontawesome4}
+% Needed to use icons from font-awesome-5 (https://github.com/javydekoning/LaTeX-FontAwesome5)
+\RequirePackage{fontawesome5}
 %-------------------------------------------------------------------------------
 
 \RequirePackage[default,opentype]{sourcesanspro}
@@ -205,6 +207,16 @@
 \newfontfamily\FA[
     Path=\@fontdir
 ]{FontAwesome}
+% Set the FontAwesome5 font to be up-to-date.
+\newfontfamily\FAB[
+    Path=\@fontdir,
+]{Font-Awesome-5-Brands-Regular-400}
+\newfontfamily\FAR[
+    Path=\@fontdir,
+]{Font-Awesome-5-Free-Regular-400}
+\newfontfamily\FAS[
+    Path=\@fontdir,
+]{Font-Awesome-5-Free-Solid-900}
 % Set font for header (default is Roboto)
 \newfontfamily\headerfont[
   Path=\@fontdir,
