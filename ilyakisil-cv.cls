@@ -175,6 +175,7 @@
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
 \definecolor{awesome-darknight}{HTML}{131A28}
+\definecolor{awesome-gold}{HTML}{FA960A}
 \colorlet{awesome}{awesome-red}
 
 % ================================================================
@@ -277,6 +278,7 @@
 \newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 
 % For elements of skill
+\newcommand*{\skillstarstyle}[2]{{\fontsize{10pt}{1em}\bodyfontlight\color{#2} #1}}
 \newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
 \newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
 
@@ -487,21 +489,6 @@
 \newcommand{\lorem}{
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
 }
-
-% Content will be aligned on the left
-\newenvironment{metaSectionLeft}[1]{
-	\vspace{6pt}
-    \begin{center}
-        \textcolor{white}{\large{\uppercase{#1}}}\\
-        \begin{minipage}[t]{0.85\linewidth}
-            \normalsize
-            \parbox{\mpwidth}{\textcolor{white}	\hrule}
-
-}{
-        \end{minipage}
-    \end{center}
-}
-
 % use to vertically center content
 % credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
 \newcommand*{\vcenteredhbox}[1]{
@@ -509,27 +496,6 @@
     \setbox0=\hbox{#1}\parbox{\wd0}{\box0}
     \endgroup
 }
-%icon shortcut
-\newcommand{\icon}[3]{\makebox(#2, #2){\textcolor{#3}{\csname fa#1\endcsname}}}
-
-%icon with text shortcut
-\newcommand{\icontext}[4]{
-	\vcenteredhbox{\icon{#1}{#2}{#4}}
-    \vcenteredhbox{\textcolor{#4}{#3}}
-}
-
-%icon with website url
-\newcommand{\iconhref}[5]{
-    \vcenteredhbox{\icon{#1}{#2}{#5}}
-    \href{#4}{\textcolor{#5}{#3}}
-}
-
-%icon with email link
-\newcommand{\iconemail}[5]{
-    \vcenteredhbox{\icon{#1}{#2}{#5}}
-    \href{mailto:#4}{\textcolor{#5}{#3}}
-}
-
 
 % ================================================================
 
@@ -789,66 +755,64 @@
   \begin{center}
     \setlength\tabcolsep{0pt}
     \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1cm} L{\textwidth - 4cm} R{3cm}}
 }{%
     \end{tabular*}
   \end{center}
 }
 % Define a line of cv information(honor, award or something else)
-% Usage: \cvhonor{<position>}{<title>}{<location>}{<date>}
+% Usage: \cvhonor{<Award>}{<Event>}{<Date/Location>}{<Logo>}
 \newcommand*{\cvhonor}[4]{%
   \honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} & \honorlocationstyle{#3} \\
 }
 
 % Define an environment for cvskill
-\newenvironment{cvskills}{%
-  \vspace{\acvSectionContentTopSkip}
-  % \vspace{-2.0mm}
-  \begin{center}
-    \setlength\tabcolsep{1ex}
-    \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
-}{%
-    \end{tabular*}
-  \end{center}
-}
-
-% Define an environment for cvskillarea
-\newcounter{startCounter}
-\newenvironment{cvskillsarea}[1]{
-    \vspace{\acvSectionContentTopSkip}
-    \begin{center}
-        \setcounter{startCounter}{1}
-        \whiledo {\value{startCounter} < 10}%
-        {%
-            \ifnum\value{startCounter}<#1
-                \icon{Star}{12}{complcol}
-            \else
-                \icon{Star}{12}{white}
-            \fi
-            \stepcounter{startCounter}%
-        }\\
-}{
-    \end{center}
+\newcounter{starCounter}
+\newenvironment{cvskills}[1]{%
+	\vspace{\acvSectionContentTopSkip}
+	\begin{center}
+        \ifnum#1=0
+        {}
+        \else
+            % Create stars to indicate proficiency
+    		\setcounter{starCounter}{0}
+    		\whiledo {\value{starCounter} < 10}%
+    		{%
+    			\ifnum\value{starCounter}<#1
+                    \skillstarstyle{\faStarS}{awesome-gold}
+    			\else
+                    \skillstarstyle{\faStarS}{white}
+    			\fi
+    			\stepcounter{starCounter}%
+    		}\\
+            \vspace{\acvSectionContentTopSkip}
+        \fi
+		\setlength\tabcolsep{1ex}
+		\setlength{\extrarowheight}{0pt}
+		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
+			}{%
+		\end{tabular*}
+	\end{center}
 }
 
 % Define a line of cv information(skill)
-% Usage: \cvskill{<type>}{<skillset>}
-\newcommand*{\cvskill}[2]{%
-	\skilltypestyle{#1} & \skillsetstyle{#2} \\
+% Usage: \cvskill{<type>}{<icon>}{<skillset>}
+\newcommand*{\cvskill}[3]{%
+	\skilltypestyle{#2} & \skilltypestyle{#1} \\
+    \multicolumn{2}{L{\textwidth}}{\skillsetstyle{#3}} \\
 }
 
 % Define an environment for cvitems(for cventry)
 \newenvironment{cvitems}{%
-  \vspace{-4.0mm}
-  \begin{justify}
-  \begin{itemize}[leftmargin=2ex, nosep, noitemsep]
-    \setlength{\parskip}{0pt}
-    \renewcommand{\labelitemi}{\bullet}
-}{%
-  \end{itemize}
-  \end{justify}
-  \vspace{-4.0mm}
+	\vspace{-4.0mm}
+	\begin{justify}
+		\begin{itemize}[leftmargin=2ex, nosep, noitemsep]
+			\setlength{\parskip}{0pt}
+			\renewcommand{\labelitemi}{\bullet}
+			}{%
+		\end{itemize}
+	\end{justify}
+	\vspace{-4.0mm}
 }
 
 
