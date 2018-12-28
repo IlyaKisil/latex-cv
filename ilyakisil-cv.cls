@@ -278,7 +278,7 @@
 \newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 
 % For elements of skill
-\newcommand*{\skillstarstyle}[2]{{\fontsize{10pt}{1em}\bodyfontlight\color{#2} #1}}
+\newcommand*{\skillstarstyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\color{awesome-gold} #1}}
 \newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
 \newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
 
@@ -456,6 +456,7 @@
 
 % Others
 \newcommand{\acvSectionTopSkip}{3mm}
+\newcommand{\acvSkillStarTopSkip}{1mm}
 \newcommand{\acvSectionContentTopSkip}{2.5mm}
 
 
@@ -655,7 +656,7 @@
   \vspace{\acvSectionTopSkip}
   \sectionstyle{#1}
   \phantomsection
-  \color{gray}\vhrulefill{0.9pt}
+  {\color{gray}\vhrulefill{0.9pt}}
 }
 
 % Define a subsection for CV
@@ -726,39 +727,39 @@
 
 % Define an environment for cvsubentry
 \newenvironment{cvsubentries}{%
-  \begin{center}
+    \begin{center}
 }{%
-  \end{center}
+    \end{center}
 }
 % Define a subentry of cv information
 % Usage: \cvsubentry{<position>}{<title>}{<date>}{<description>}
 \newcommand*{\cvsubentry}[4]{%
-  \setlength\tabcolsep{0pt}
-  \setlength{\extrarowheight}{0pt}
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
-    \setlength\leftskip{0.2cm}
-    \subentrytitlestyle{#2} & \ifthenelse{\equal{#1}{}}
-      {\subentrydatestyle{#3}}{}
-    \ifthenelse{\equal{#1}{}}
-      {}
-      {\subentrypositionstyle{#1} & \subentrydatestyle{#3} \\}
-    \ifthenelse{\equal{#4}{}}
-      {}
-      {\multicolumn{2}{L{17.0cm}}{\subdescriptionstyle{#4}} \\}
-  \end{tabular*}
+	\setlength\tabcolsep{0pt}
+	\setlength{\extrarowheight}{0pt}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+		\setlength\leftskip{0.2cm}
+		\subentrytitlestyle{#2} & \ifthenelse{\equal{#1}{}}
+		{\subentrydatestyle{#3}}{}
+		\ifthenelse{\equal{#1}{}}
+		{}
+		{\subentrypositionstyle{#1} & \subentrydatestyle{#3} \\}
+		\ifthenelse{\equal{#4}{}}
+		{}
+		{\multicolumn{2}{L{17.0cm}}{\subdescriptionstyle{#4}} \\}
+	\end{tabular*}
 }
 
 % Define an environment for cvhonor
 \newenvironment{cvhonors}{%
-  \vspace{\acvSectionContentTopSkip}
-  \vspace{-2mm}
-  \begin{center}
-    \setlength\tabcolsep{0pt}
-    \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1cm} L{\textwidth - 4cm} R{3cm}}
-}{%
-    \end{tabular*}
-  \end{center}
+    \vspace{\acvSectionContentTopSkip}
+    \vspace{-2mm}
+    \begin{center}
+    	\setlength\tabcolsep{0pt}
+    	\setlength{\extrarowheight}{0pt}
+    	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1cm} L{\textwidth - 4cm} R{3cm}}
+    		}{%
+    	\end{tabular*}
+    \end{center}
 }
 % Define a line of cv information(honor, award or something else)
 % Usage: \cvhonor{<Award>}{<Event>}{<Date/Location>}{<Logo>}
@@ -767,26 +768,39 @@
 }
 
 % Define an environment for cvskill
+% Usage: \begin{cvskills}{<number-full-stars>}{<half-star>} ... \end{cvskills}
 \newcounter{starCounter}
-\newenvironment{cvskills}[1]{%
-	\vspace{\acvSectionContentTopSkip}
+\newcounter{starHalfCounter}
+\newenvironment{cvskills}[2]{%
 	\begin{center}
         \ifnum#1=0
         {}
         \else
-            % Create stars to indicate proficiency
+            % Create stars to indicate proficiency (out of 5 with 0.5 step)
+            % First draw full stars, then half star (if present), then empty start
+            \vspace{\acvSkillStarTopSkip}
     		\setcounter{starCounter}{0}
-    		\whiledo {\value{starCounter} < 10}%
+    		\setcounter{starHalfCounter}{0}
+    		\whiledo {\value{starCounter} < 5}%
     		{%
-    			\ifnum\value{starCounter}<#1
-                    \skillstarstyle{\faStarS}{awesome-gold}
+    			\ifnum\value{starCounter} < #1
+                    \skillstarstyle{\faStarS}
     			\else
-                    \skillstarstyle{\faStarS}{white}
+                    \ifnum#2=1
+                        \ifnum\value{starHalfCounter} < 1
+                            \skillstarstyle{\faAlternateStarHalf}
+                            \stepcounter{starHalfCounter}
+                        \else
+                            \skillstarstyle{\faStarR}
+                        \fi
+                    \else
+                        \skillstarstyle{\faStarR}
+                    \fi
     			\fi
     			\stepcounter{starCounter}%
     		}\\
-            \vspace{\acvSectionContentTopSkip}
         \fi
+        \vspace{\acvSectionContentTopSkip}
 		\setlength\tabcolsep{1ex}
 		\setlength{\extrarowheight}{0pt}
 		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
@@ -798,8 +812,10 @@
 % Define a line of cv information(skill)
 % Usage: \cvskill{<type>}{<icon>}{<skillset>}
 \newcommand*{\cvskill}[3]{%
-	\skilltypestyle{#2} & \skilltypestyle{#1} \\
-    \multicolumn{2}{L{\textwidth}}{\skillsetstyle{#3}} \\
+    \ifempty{#3}
+        {\skilltypestyle{#2} & \skilltypestyle{#1} \\}
+        {\skilltypestyle{#2} & \skilltypestyle{#1} \\
+        \multicolumn{2}{L{\textwidth}}{\skillsetstyle{#3}} \\}
 }
 
 % Define an environment for cvitems(for cventry)
