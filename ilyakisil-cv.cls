@@ -175,7 +175,7 @@
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
 \definecolor{awesome-darknight}{HTML}{131A28}
-\definecolor{awesome-gold}{HTML}{FA960A}
+\definecolor{awesome-gold}{HTML}{efc520}
 \colorlet{awesome}{awesome-red}
 
 % ================================================================
@@ -199,6 +199,10 @@
 \def\@sectioncolor#1#2#3{%
   \ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2#3}}{#1#2#3}%
 }
+
+% Boolean value to switch enable/disable 'vhrulefill' for 'cvsection'
+\newbool{acvSectionVHRuleFill}
+\setbool{acvSectionVHRuleFill}{true}
 
 
 %-------------------------------------------------------------------------------
@@ -656,7 +660,14 @@
   \vspace{\acvSectionTopSkip}
   \sectionstyle{#1}
   \phantomsection
-  {\color{gray}\vhrulefill{0.9pt}}
+  \ifbool{acvSectionVHRuleFill}
+    {
+        {\color{gray}\vhrulefill{0.9pt}}
+    }
+    {
+        {}
+    }%
+  % {\color{gray}\vhrulefill{0.9pt}}
 }
 
 % Define a subsection for CV
