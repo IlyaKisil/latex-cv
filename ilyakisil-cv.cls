@@ -487,6 +487,16 @@
 \newcommand{\lorem}{
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
 }
+\newcommand{\fillme}[1][]{
+    \fcolorbox{white}{awesome-skyblue}{
+        {\fontsize{10pt}{1em}\bodyfontlight\bfseries\color{white}
+            Fill me
+            \ifempty{#1}%
+			    {}
+                {:~#1}%
+        }
+    }
+}
 % use to vertically center content
 % credits to: http://tex.stackexchange.com/questions/7219/how-to-vertically-center-two-images-next-to-each-other
 \newcommand*{\vcenteredhbox}[1]{
@@ -866,6 +876,24 @@
   \lettersectionstyle{#1}
   \color{gray}\vhrulefill{0.9pt}
   \par\nobreak\addvspace{0.4ex}
+}
+
+% Define an environment for lettermatchitem
+\newenvironment{lettermatchitems}{%
+    \begin{center}
+        \setlength\tabcolsep{0pt}
+        \setlength{\extrarowheight}{8pt}
+        \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} L{0.45\linewidth} L{0.45\linewidth}}
+            }{%
+        \end{tabular*}
+    \end{center}
+}
+
+% Define a required-matching qualification item for the cover letter
+% Usage: \lettermatchitem{<required-qualification>}{<matching-qualification>}
+\newcommand{\lettermatchitem}[2]{%
+    \faQuestionCircle\hfill \begin{minipage}[t]{0.93\linewidth} #1 \end{minipage} &
+    \faCheckCircle\hfill \begin{minipage}[t]{0.93\linewidth} #2 \end{minipage}\\
 }
 
 % Define a title of the cover letter
