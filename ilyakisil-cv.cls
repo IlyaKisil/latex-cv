@@ -175,21 +175,8 @@
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
 \definecolor{awesome-darknight}{HTML}{131A28}
-\definecolor{awesome-gold}{HTML}{efc520}
+\definecolor{awesome-gold}{HTML}{EFCD00}
 \colorlet{awesome}{awesome-red}
-
-% ================================================================
-%accent color
-\definecolor{complcol}{RGB}{250,150,10}
-
-%dark background color
-\definecolor{bgcol}{RGB}{110,110,110}
-
-%light background / accent color
-\definecolor{softcol}{RGB}{225,225,225}
-
-\definecolor{sectcol}{RGB}{0,120,150}
-% ================================================================
 
 % Boolean value to switch section color highlighting
 \newbool{acvSectionColorHighlight}
@@ -265,7 +252,7 @@
 \newcommand*{\entrypositionstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\scshape\color{graytext} #1}}
 \newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
-\newcommand*{\entryhomepagestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome}\faHome\space#1}}
+\newcommand*{\entryhomepagestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome}{\fontsize{6pt}{1em}\faAlternateExternalLink}~~#1}}
 \newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
 
 % For elements of subentry
@@ -282,7 +269,7 @@
 \newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 
 % For elements of skill
-\newcommand*{\skillstarstyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\color{awesome-gold} #1}}
+\newcommand*{\skillstarstyle}[1]{{\fontsize{10pt}{1em}\color{awesome-gold} #1}}
 \newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
 \newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
 
@@ -473,7 +460,13 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 % Use to draw horizontal line with specific thickness
-\def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\def\vhrulefill#1{
+    \ifbool{acvSectionVHRuleFill}
+        {
+            \leavevmode\leaders\hrule\@height#1\hfill \kern\z@
+        }
+        {}%
+}
 
 % Use to execute conditional statements by checking empty string
 \newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
@@ -648,26 +641,39 @@
 % Define a footer for CV
 % Usage: \makecvfooter{<left>}{<center>}{<right>}
 \newcommand*{\makecvfooter}[3]{%
-  \fancyfoot{}
-  \fancyfoot[L]{\footerstyle{#1}}
-  \fancyfoot[C]{\footerstyle{#2}}
-  \fancyfoot[R]{\footerstyle{#3}}
+    \fancyfoot{}
+    \fancyfoot[L]{\footerstyle{#1}}
+    \fancyfoot[C]{\footerstyle{#2}}
+    \fancyfoot[R]{\footerstyle{#3}}
 }
 
 % Define a section for CV
-% Usage: \cvsection{<section-title>}
-\newcommand{\cvsection}[1]{%
-  \vspace{\acvSectionTopSkip}
-  \sectionstyle{#1}
-  \phantomsection
-  \ifbool{acvSectionVHRuleFill}
-    {
-        {\color{gray}\vhrulefill{0.9pt}}
-    }
-    {
-        {}
-    }%
-  % {\color{gray}\vhrulefill{0.9pt}}
+% Supports optional argument to change alignment(C: center, L: left, R: right)
+% Usage: \cvsection[C|L|R]{<section-title>}
+\newcommand{\cvsection}[2][L]{%
+	\vspace{\acvSectionTopSkip}
+	\ifthenelse{\equal{#1}{L}}
+	{
+		\raggedright
+		\sectionstyle{#2}
+		{\color{gray}\vhrulefill{0.9pt}}
+	}
+	{
+		\ifthenelse{\equal{#1}{R}}
+		{
+			\raggedleft
+			{\color{gray}\vhrulefill{0.9pt}}
+			\sectionstyle{#2}
+		}
+		{
+			\centering
+			{\color{gray}\vhrulefill{0.9pt}}
+			\sectionstyle{#2}
+			{\color{gray}\vhrulefill{0.9pt}}
+            \par % \centering needs a \par (or an empty line)
+		}
+	}
+	\phantomsection
 }
 
 % Define a subsection for CV
