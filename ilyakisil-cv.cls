@@ -4,7 +4,6 @@
 %
 % This class is based on:
 %   1) The one downloaded from https://github.com/posquit0/Awesome-CV
-%   2) Some styling adopted from https://github.com/jankapunkt/latexcv
 
 
 %-------------------------------------------------------------------------------
@@ -476,7 +475,7 @@
 % and pasted from pdf into a browser
 \newcommand{\urltilde}{\char`\~}
 
-% returns minipage width minus two times \fboxsep
+% Returns minipage width minus two times \fboxsep
 % to keep padding included in width calculations
 \newcommand{\mpwidth}{\linewidth-\fboxsep-\fboxsep}
 
@@ -484,9 +483,11 @@
 \newcommand{\mystrut}{
     \rule[-.3\baselineskip]{0pt}{\baselineskip}
 }
+% Shortcut for 10 word lorem
 \newcommand{\lorem}{
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.
 }
+% To highlight parts that needs to be filled in
 \newcommand{\fillme}[1][]{
     \fcolorbox{white}{awesome-skyblue}{
         {\fontsize{10pt}{1em}\bodyfontlight\bfseries\color{white}
@@ -658,8 +659,8 @@
 }
 
 % Define a section for CV
-% Supports optional argument to change alignment(C: center, L: left, R: right)
-% Usage: \cvsection[C|L|R]{<section-title>}
+% Supports optional argument to change alignment(L: left, C: center, R: right)
+% Usage: \cvsection[L|C|R]{<section-title>}
 \newcommand{\cvsection}[2][L]{%
 	\vspace{\acvSectionTopSkip}
 	\ifthenelse{\equal{#1}{L}}
@@ -864,26 +865,59 @@
 %-------------------------------------------------------------------------------
 % Define an environment for cvletter
 \newenvironment{cvletter}{%
-  \lettertextstyle
-}{%
+        \lettertextstyle
+    }{%
 }
 
 % Define a section for the cover letter
-% Usage: \lettersection{<section-title>}
-\newcommand{\lettersection}[1]{%
-  \par\addvspace{2.5ex}
-  \phantomsection{}
-  \lettersectionstyle{#1}
-  \color{gray}\vhrulefill{0.9pt}
-  \par\nobreak\addvspace{0.4ex}
+% Supports optional argument to change alignment(L: left, C: center, R: right)
+% Usage: \lettersection[L|C|R]{<section-title>}
+\newcommand{\lettersection}[2][L]{%
+    \par\addvspace{2.5ex}
+    \phantomsection{}
+    \ifthenelse{\equal{#1}{L}}
+	{
+		\raggedright
+		\lettersectionstyle{#2}
+		{\color{gray}\vhrulefill{0.9pt}}
+	}
+	{
+		\ifthenelse{\equal{#1}{R}}
+		{
+			\raggedleft
+			{\color{gray}\vhrulefill{0.9pt}}
+			\lettersectionstyle{#2}
+		}
+		{
+			\centering
+			{\color{gray}\vhrulefill{0.9pt}}
+			\lettersectionstyle{#2}
+			{\color{gray}\vhrulefill{0.9pt}}
+		}
+	}
+    \par\nobreak\addvspace{0.4ex}
+
 }
 
 % Define an environment for lettermatchitem
-\newenvironment{lettermatchitems}{%
+% Usage:
+% \begin{lettermatchitems}{<Column-name-1>}{<Column-name-2>}
+%     \lettermatchitem{<R-1>}{<M-1>}
+%     ...
+%     \lettermatchitem{<R-n>}{<M-n>}
+% \end{lettermatchitems}
+\newenvironment{lettermatchitems}[2]{%
     \begin{center}
+        \ifthenelse{\isempty{#1} \or \isempty{#2}}
+            {}
+            {
+                \begin{minipage}[t]{0.47\linewidth} \centering\bfseries #1 \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.47\linewidth} \centering\bfseries #2 \end{minipage}
+            }
         \setlength\tabcolsep{0pt}
         \setlength{\extrarowheight}{8pt}
-        \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} L{0.45\linewidth} L{0.45\linewidth}}
+        \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} L{0.47\linewidth} L{0.47\linewidth}}
             }{%
         \end{tabular*}
     \end{center}

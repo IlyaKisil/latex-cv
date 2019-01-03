@@ -10,7 +10,6 @@
     footskip=.5cm
 }
 
-
 % Color for highlights
 % Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
 %                 awesome-nephritis, awesome-concrete, awesome-darknight, awesome-gold
@@ -28,7 +27,7 @@
 % Set false if you don't want to highlight section with awesome color
 \setbool{acvSectionColorHighlight}{true}
 
-% Set false if you don't want to 'vhrulefill' for 'cvsection'
+% Set false if you don't want to 'vhrulefill' for 'lettersection'
 \setbool{acvSectionVHRuleFill}{true}
 
 % If you would like to change the social information separator from a pipe (|) to something else
@@ -37,10 +36,9 @@
 
 %-------------------------------------------------------------------------------
 %	PERSONAL INFORMATION
-%	Comment any of the lines below if they are not required
+%	Modify the lines below or comment out any of them if they are not required
 %-------------------------------------------------------------------------------
-% Available options: circle|rectangle,edge/noedge,left/right
-\photo[circle,noedge,left]{./ILYA_KISIL_1} % Available non-default options: [rectangle, noedge, right]
+\photo[circle,noedge,left]{./ILYA_KISIL_1} % Available options: circle|rectangle, edge|noedge, left|right
 \firstname{Ilya}
 \lastname{Kisil}
 
@@ -63,17 +61,21 @@
 %	All of the below lines must be filled out
 %-------------------------------------------------------------------------------
 % The company being applied to
-\recipient
-  {Company Recruitment Team}
-  {\fillme[company info]}
+\recipient{Company Recruitment Team}
+          {\fillme[company info]}
+
 % The date on the letter, default is the date of compilation
 \letterdate{\today}
+
 % The title of the letter
 \lettertitle{Job Application for \fillme[position]}
-% How the letter is opened
+
+% How the letter is opened.
 \letteropening{Dear \fillme[recipient]}
+
 % How the letter is closed
 \letterclosing{Sincerely,}
+
 % Any enclosures with the letter
 \letterenclosure[Attached]{Curriculum Vitae}
 
@@ -87,13 +89,11 @@
 % Give optional argument to change alignment(C: center, L: left, R: right)
 \makecvheader[R]
 
-
 % Print the title with above letter info
 \makelettertitle
 
-
 %-------------------------------------------------------------------------------
-%	CONTENT
+%	BEGIN CONTENT
 %-------------------------------------------------------------------------------
 \begin{cvletter}
 
@@ -101,31 +101,27 @@
     \lorem
 
 
-    \lettersection{Why THIS COMPANY?}
+    \lettersection{Why \fillme[company name]?}
     \lorem
 
     \lettersection{Why Me?}
     I was delighted to see your recent online job posting for the \fillme position. The skills and experience you are looking for are excellent match for my qualifications and interests.
 
-    \begin{lettermatchitems}
-        \lettermatchitem{% Describe job requirement
-                            \lorem
-                        }
-                        {% Describe your matching
-                            \lorem
-                        }
-        \lettermatchitem{% Describe job requirement
-                            \lorem
-                        }
-                        {% Describe your matching
-                            \lorem
-                        }
+    \begin{lettermatchitems}{Your Requirements}{My Qualifications}
+        \lettermatchitem
+            {% Describe job requirement
+                \lorem
+            }
+            {% Describe your matching qualification
+                \lorem
+            }
     \end{lettermatchitems}
 
 \end{cvletter}
-
-
 %-------------------------------------------------------------------------------
+%	END CONTENT
+%-------------------------------------------------------------------------------
+
 % Print the signature and enclosures with above letter info
 \makeletterclosing
 
@@ -134,6 +130,6 @@
 \makecvfooter
   {\today}
   {Ilya~~~·~~~Kisil}
-  {}
+  {\thepage}
 
 \end{document}

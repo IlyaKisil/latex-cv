@@ -41,14 +41,14 @@
 
 %-------------------------------------------------------------------------------
 %	PERSONAL INFORMATION
-%	Comment any of the lines below if they are not required
+%	Modify the lines below or comment out any of them if they are not required
 %-------------------------------------------------------------------------------
-% \photo{./ILYA_KISIL_1} % Available non-default options: [rectangle, noedge, right]
+% \photo{./ILYA_KISIL_1} % Available options: circle|rectangle, edge|noedge, left|right
 \firstname{Ilya}
 \lastname{Kisil}
 
-% \position{PhD Student{\enskip\cdotp\enskip}Imperial College London} % don't really need this
-\address{London, UK} % don't really need this
+% \position{PhD Student{\enskip\cdotp\enskip}Imperial College London}
+\address{London, UK}
 
 \mobile{+44 (7539) 85****}      % personal info
 \email{ilyakisil@gmail.com}     % personal info
@@ -62,6 +62,8 @@
 
 
 %-------------------------------------------------------------------------------
+%	MAIN
+%-------------------------------------------------------------------------------
 \begin{document}
 
 % Print the header with above personal information
@@ -70,12 +72,12 @@
 
 % Print the footer with 3 arguments(<left>, <center>, <right>)
 \makecvfooter{\today}
-             {}
+             {Ilya~~~·~~~Kisil}
              {\thepage\hspace{5mm}}
 
 
 %-------------------------------------------------------------------------------
-%	MAIN SECTIONS
+%	BEGIN CONTENT
 %-------------------------------------------------------------------------------
 \newcommand*{\mpheight}{0.885\textheight}
 \fcolorbox{white}{white}{
@@ -96,5 +98,8 @@
         \input{./source/skills.tex}
 	\end{minipage}
 }
+%-------------------------------------------------------------------------------
+%	END CONTENT
+%-------------------------------------------------------------------------------
 
 \end{document}
