@@ -111,10 +111,10 @@ fi
 
 function compile () {
     echo "INFO $CREATE_PDF: Creating pdf with 'xelatex'"
-    if [[ ! -d ${AUX_DIR} ]]; then
-        mkdir -p ${AUX_DIR}
+    if [[ ! -d ${aux_home} ]]; then
+        mkdir -p ${aux_home}
     fi
-    xelatex -output-directory=${AUX_DIR} ${FILE}
+    xelatex -output-directory=${aux_home} ${FILE}
 }
 
 function clean_aux() {

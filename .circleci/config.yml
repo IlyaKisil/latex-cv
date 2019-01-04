@@ -7,7 +7,6 @@ jobs:
         branches:
             only:
                 - master
-                - ci-setup
         steps:
             - checkout
             - run:
