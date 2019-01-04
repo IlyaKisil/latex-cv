@@ -2,13 +2,20 @@ version: 2
 
 jobs:
     build:
-        docker:            
+        docker:
             - image: thomasweise/texlive
+        branches:
+            only:
+                - master
+                - ci-setup
         steps:
             - checkout
             - run:
-                name: Greeting
-                command: echo Hello, world.
-            - run:
-                name: Print the Current Time
-                command: date
+                name: Compile PDF with Makefile
+                command: |
+                    make ci-info
+                    make cv
+                    make cover-letter
+                    make clean-aux
+            - store_artifacts:
+                path: ~/project/build
