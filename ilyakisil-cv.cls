@@ -169,6 +169,7 @@
 \definecolor{awesome-emerald}{HTML}{00A388}
 \definecolor{awesome-skyblue}{HTML}{0395DE}
 \definecolor{awesome-red}{HTML}{DC3522}
+\definecolor{awesome-green}{HTML}{008F45}
 \definecolor{awesome-pink}{HTML}{EF4089}
 \definecolor{awesome-orange}{HTML}{FF6138}
 \definecolor{awesome-nephritis}{HTML}{27AE60}
@@ -197,7 +198,7 @@
 % Set the FontAwesome font to be up-to-date.
 \newfontfamily\FA[
     Path=\@fontdir
-]{FontAwesome}
+]{Font-Awesome-4}
 % Set the FontAwesome5 font to be up-to-date.
 \newfontfamily\FAB[
     Path=\@fontdir,
@@ -454,9 +455,9 @@
 %                Commands for utilities
 %-------------------------------------------------------------------------------
 % Use to align an element of tabular table
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 
 % Use to draw horizontal line with specific thickness
 \def\vhrulefill#1{
@@ -665,23 +666,15 @@
 	\vspace{\acvSectionTopSkip}
 	\ifthenelse{\equal{#1}{L}}
 	{
-		\raggedright
-		\sectionstyle{#2}
-		{\color{gray}\vhrulefill{0.9pt}}
+		{\raggedright\sectionstyle{#2}{\color{gray}\vhrulefill{0.9pt}}}
 	}
 	{
 		\ifthenelse{\equal{#1}{R}}
 		{
-			\raggedleft
-			{\color{gray}\vhrulefill{0.9pt}}
-			\sectionstyle{#2}
+			{\raggedleft{\color{gray}\vhrulefill{0.9pt}}\sectionstyle{#2}}
 		}
 		{
-			\centering
-			{\color{gray}\vhrulefill{0.9pt}}
-			\sectionstyle{#2}
-			{\color{gray}\vhrulefill{0.9pt}}
-            \par % \centering needs a \par (or an empty line)
+			{\centering{\color{gray}\vhrulefill{0.9pt}}\sectionstyle{#2}{\color{gray}\vhrulefill{0.9pt}}\par}
 		}
 	}
 	\phantomsection
@@ -877,26 +870,18 @@
     \phantomsection{}
     \ifthenelse{\equal{#1}{L}}
 	{
-		\raggedright
-		\lettersectionstyle{#2}
-		{\color{gray}\vhrulefill{0.9pt}}
+		{\raggedright\lettersectionstyle{#2}{\color{gray}\vhrulefill{0.9pt}}}
 	}
 	{
 		\ifthenelse{\equal{#1}{R}}
 		{
-			\raggedleft
-			{\color{gray}\vhrulefill{0.9pt}}
-			\lettersectionstyle{#2}
+			{\raggedleft{\color{gray}\vhrulefill{0.9pt}}\lettersectionstyle{#2}}
 		}
 		{
-			\centering
-			{\color{gray}\vhrulefill{0.9pt}}
-			\lettersectionstyle{#2}
-			{\color{gray}\vhrulefill{0.9pt}}
+			{\centering{\color{gray}\vhrulefill{0.9pt}}\lettersectionstyle{#2}{\color{gray}\vhrulefill{0.9pt}}}
 		}
 	}
     \par\nobreak\addvspace{0.4ex}
-
 }
 
 % Define an environment for lettermatchitem
@@ -927,7 +912,7 @@
 % Usage: \lettermatchitem{<required-qualification>}{<matching-qualification>}
 \newcommand{\lettermatchitem}[2]{%
     \faQuestionCircle\hfill \begin{minipage}[t]{0.93\linewidth} #1 \end{minipage} &
-    \faCheckCircle\hfill \begin{minipage}[t]{0.93\linewidth} #2 \end{minipage}\\
+    {\color{awesome-green}\faCheckCircle}\hfill \begin{minipage}[t]{0.93\linewidth} #2 \end{minipage}\\
 }
 
 % Define a title of the cover letter
