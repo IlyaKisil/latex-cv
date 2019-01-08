@@ -1,4 +1,5 @@
 # CV and Cover Letter templates written in LaTeX
+[![CircleCI](https://circleci.com/gh/IlyaKisil/latex-cv.svg?style=shield)](https://circleci.com/gh/IlyaKisil/latex-cv)
 
 ## Notes
 
